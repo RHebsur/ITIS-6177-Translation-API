@@ -49,6 +49,45 @@ exports.translateText = (req, res, next) => {
     });
 };
 
+//Translate the source text to target language with parameters
+exports.translateToFromParams = (req, res, next) => {
+    var translateText = req.params.text;
+    var languageFrom = req.params.languageFrom;
+    var languageTo = req.params.languageTo;
+
+    //Axios HTTP request
+    axios({
+        baseURL: endpoint,
+        url: '/translate',
+        method: 'post',
+        headers: {
+            'Ocp-Apim-Subscription-Key': subscriptionKey,
+            'Ocp-Apim-Subscription-Region': location,
+            'Content-type': 'application/json',
+            'X-ClientTraceId': uuidv4().toString()
+        },
+        params: {
+            'api-version': '3.0',
+            'from': languageFrom,
+            'to': languageTo
+        },
+        data: [{
+            'text': translateText
+        }],
+        responseType: 'json'
+    }).then(response => {
+        var sendData = response.data[0].translations[0]
+        res.status = 200;
+        console.log("sendData:"+sendData);
+        return res.send(sendData)
+        
+    })
+    .catch(err => {
+        res.send(err.response.data);
+    });
+};
+
+
 //Get all the languages supported for translation
 exports.languages = (req, res, next) => {
     //Axios HTTP request

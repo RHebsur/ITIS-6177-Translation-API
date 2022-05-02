@@ -47,6 +47,46 @@ exports.translateDocument= (req, res, next) => {
     });   
 };
 
+//Translate the source text to target language with parameters
+exports.translateDocToParams= (req, res, next) => {     
+    var route = '/batches';
+    var languageToTranslate = req.params.languageTo;
+    console.log("language source: "+languageToTranslate)
+    let data = JSON.stringify({"inputs": [
+    {
+        "source": {
+            "sourceUrl": process.env.SourceUrl,
+            "storageSource": "AzureBlob"
+        },
+        "targets": [
+            {
+                "targetUrl": process.env.TargetUrl,
+                "storageSource": "AzureBlob",
+                "language": languageToTranslate}]}]});
+      
+    let config = {
+    method: 'post',
+    baseURL: endpoint,
+    url: route,
+    headers: {
+        'Ocp-Apim-Subscription-Key': subscriptionKey,
+        'Content-Type': 'application/json'
+    },
+    data: data
+    };
+
+    axios(config)
+    .then(function (response) {
+        let result = { statusText: response.statusText, statusCode: response.status };
+        console.log(JSON.stringify(result));
+        return res.send(JSON.stringify(result))
+    })
+    .catch(function (error) {
+        console.log(error);
+        return res.send(error)
+    });   
+};
+
 //Get all the supported file formats for document translation
 exports.getFileFormats = (req, res, next) => {
     var route = '/documents/formats';

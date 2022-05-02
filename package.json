@@ -21,13 +21,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/RHebsur/ITIS6177-Translate-API-Final.git"
+    "url": "git+https://github.com/RHebsur/ITIS-6177-Translation-API.git"
   },
   "author": "Rakesh Hebsur",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/RHebsur/ITIS6177-Translate-API-Final/issues"
+    "url": "https://github.com/RHebsur/ITIS-6177-Translation-API/issues"
   },
-  "homepage": "https://github.com/RHebsur/ITIS6177-Translate-API-Final#readme",
+  "homepage": "https://github.com/RHebsur/ITIS-6177-Translation-API#readme",
   "devDependencies": {}
 }
